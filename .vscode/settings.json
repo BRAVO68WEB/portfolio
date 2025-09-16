@@ -37,5 +37,7 @@
   "tailwindCSS.experimental.classRegex": [["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]],
 
   "i18n-ally.localesPaths": ["./messages"],
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally.keystyle": "nested",
+  "isHeOnline.apiKey": "Xb68ISheONLINEtokenX",
+  "isHeOnline.serverUrl": "http://localhost:3000"
 }
