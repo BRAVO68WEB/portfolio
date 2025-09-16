@@ -7,6 +7,7 @@ import gdsclpuLogo from './images/gdsclpu_logo-workex.jpg'
 import sharpsellLogo from './images/sharpsellai_logo-workex.jpg'
 import hybr1dLogo from './images/usehybr1d_logo-workex.jpg'
 import vulnconLogo from './images/vulncon_logo-workex.jpg'
+import loginradiusLogo from './images/loginradius_logo-workex.jpg'
 
 export interface WorkExperience {
   company: {
@@ -31,13 +32,32 @@ export interface WorkExperience {
 export const WORK_EXPERIENCES: WorkExperience[] = [
   {
     company: {
+      logo: loginradiusLogo,
+      name: 'LoginRadius',
+      url: 'https://www.loginradius.com/',
+    },
+    description:
+      'As a Software Engineer in Implementations as a part of Customer Success Team, I am responsible for the development and maintenance of the LoginRadius Docs, SDKs, API References and PoCs. I also help customers with their implementation of the LoginRadius platform and provide support to the customers.',
+    position: 'Software Engineer / Implementations',
+    timeline: {
+      from: 'July, 2025',
+      to: 'Present',
+    },
+    location: {
+      city: 'Hyderabad, India',
+      isRemote: false,
+    },
+    techstack: ['TypeScript', 'React', 'Node.js', 'Docker', 'Jira', 'Confluence', 'GitHub Actions'],
+  },
+  {
+    company: {
       logo: engineerScradleLogo,
       name: "Engineer's Cradle",
       url: 'https://engineerscradle.com',
     },
     description:
       'As a Founding Engineer, established CI/CD best practices and deployment strategies, reducing onboarding time by 40%. Architected a fault-tolerant M2M authentication service in Rust ensuring 99.9% uptime. Built a scalable GraphQL gateway in Go with intelligent caching, reducing P95 latency by 30%.',
-    position: 'Senior Software/Infrastructure Engineer',
+    position: 'Senior Software Engineer',
     timeline: {
       from: 'July, 2024',
       to: 'May, 2025',

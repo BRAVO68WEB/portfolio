@@ -77,8 +77,8 @@ export async function generateMetadata({ params }: { params: RootParams }): Prom
       card: 'summary_large_image',
     },
     other: {
-      'darkreader-lock': 'true'
-    }
+      'darkreader-lock': 'true',
+    },
   }
 }
 
