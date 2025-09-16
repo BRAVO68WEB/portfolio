@@ -1,6 +1,5 @@
 'use client'
 
-import process from 'node:process'
 import { clsxm } from '@zolplay/utils'
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
@@ -14,7 +13,7 @@ interface PresenceClientProps {
 
 export function PresenceClient({ className, apiUrl }: PresenceClientProps) {
   // Resolve API URL: prop takes precedence, then public env var (injected at build time)
-  const resolvedApiUrl = apiUrl ?? process.env.NEXT_PUBLIC_PRESENCE_API_URL
+  const resolvedApiUrl = apiUrl
 
   const { data, isLoading, error, lastUpdate } = usePresence({
     enabled: true,
