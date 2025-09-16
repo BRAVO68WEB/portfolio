@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import type { PresenceData, HealthResponse, UserActivity } from '../types'
+import type { HealthResponse, PresenceData, UserActivity } from '../types'
+import { useEffect, useState } from 'react'
 
 interface UsePresenceProps {
   apiUrl?: string
@@ -17,7 +17,7 @@ interface PresenceState {
   lastUpdate: number
 }
 
-export function usePresence({ enabled = true }: UsePresenceProps = {}): PresenceState {
+export function usePresence({ enabled = true, apiUrl }: UsePresenceProps = {}): PresenceState {
   const [state, setState] = useState<PresenceState>({
     data: null,
     health: null,
@@ -33,44 +33,74 @@ export function usePresence({ enabled = true }: UsePresenceProps = {}): Presence
       return
     }
 
+    if (!apiUrl || apiUrl.trim() === '') {
+      setState((prev) => ({ ...prev, isLoading: false, error: 'Presence API URL not configured' }))
+      return
+    }
+
     let eventSource: EventSource | null = null
     setState((prev) => ({ ...prev, isLoading: true }))
 
     try {
-      eventSource = new EventSource(`${process.env.NEXT_PUBLIC_PRESENCE_API_URL}/events`)
+      const url = `${apiUrl.replace(/\/$/, '')}/events`
+      eventSource = new EventSource(url)
 
       eventSource.onopen = () => {
         setState((prev) => ({ ...prev, isConnected: true, isLoading: false, error: null }))
       }
 
-      eventSource.onmessage = (event) => {
-        console.log('event', event)
+      const onActivityUpdate = (event: MessageEvent) => {
         try {
-          const activity = JSON.parse(event.data)
-          setState({
+          const activity: UserActivity = JSON.parse(event.data)
+          setState((prev) => ({
+            ...prev,
             data: { discord: activity, timestamp: activity.timestamp },
-            health: null,
             isConnected: true,
             isLoading: false,
             error: null,
             lastUpdate: Date.now(),
-          })
-        } catch (err) {
-          setState((prev) => ({ ...prev, error: 'Failed to parse event data', isLoading: false }))
+          }))
+        } catch {
+          setState((prev) => ({ ...prev, error: 'Failed to parse activity event', isLoading: false }))
         }
       }
 
-      eventSource.onerror = (err) => {
+      const onHeartbeat = (event: MessageEvent) => {
+        try {
+          const payload = JSON.parse(event.data) as { timestamp?: number }
+          setState((prev) => ({
+            ...prev,
+            isConnected: true,
+            isLoading: false,
+            error: null,
+            lastUpdate: payload.timestamp ?? Date.now(),
+          }))
+        } catch {
+          // If heartbeat can't be parsed, still consider it as a signal
+          setState((prev) => ({ ...prev, isConnected: true, isLoading: false, lastUpdate: Date.now() }))
+        }
+      }
+
+      // Named SSE events from the server
+      eventSource.addEventListener('activity-update', onActivityUpdate)
+      eventSource.addEventListener('heartbeat', onHeartbeat)
+
+      eventSource.onerror = () => {
         setState((prev) => ({ ...prev, isConnected: false, error: 'Connection lost', isLoading: false }))
       }
-    } catch (err) {
+
+      // Cleanup
+      return () => {
+        if (eventSource) {
+          eventSource.removeEventListener('activity-update', onActivityUpdate as EventListener)
+          eventSource.removeEventListener('heartbeat', onHeartbeat as EventListener)
+          eventSource.close()
+        }
+      }
+    } catch {
       setState((prev) => ({ ...prev, isConnected: false, error: 'Failed to connect', isLoading: false }))
     }
-
-    return () => {
-      if (eventSource) eventSource.close()
-    }
-  }, [enabled])
+  }, [enabled, apiUrl])
 
   return state
 }

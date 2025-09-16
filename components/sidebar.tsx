@@ -23,8 +23,8 @@ import { LogoHelmetFilled } from '~/components/logo'
 import { ThemeSelector } from '~/components/theme-selector'
 import { Clock } from '~/components/ui/clock'
 import { Link, usePathname } from '~/modules/i18n/navigation'
-import { ZpBrandLinkedIn } from './icons/ZpBrandLinkedIn'
 import { PresenceClient } from '~/modules/presence'
+import { ZpBrandLinkedIn } from './icons/ZpBrandLinkedIn'
 
 const links = [
   { href: '/', label: 'Home', icon: ZpHomeIcon },
@@ -173,7 +173,7 @@ export function Sidebar({ className }: { className?: string }) {
         <div className='relative z-50 grid grid-cols-1'>
           <Caption>04_PRESENCE</Caption>
           <div className='border-t border-(--sidebar-fg)/20 w-full h-0' />
-          <PresenceClient />
+          <PresenceClient apiUrl='https://iho.b68.dev' />
         </div>
 
         <div className='relative z-50 grid grid-cols-1'>
