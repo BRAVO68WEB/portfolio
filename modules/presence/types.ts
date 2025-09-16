@@ -1,13 +1,11 @@
-import type { ActivityType, PresenceStatus } from 'discord.js'
-
 export interface UserActivity {
   userId: string
   username: string
   discriminator: string
-  status: PresenceStatus
+  status: 'online' | 'idle' | 'dnd' | 'offline'
   activities: Array<{
     name: string
-    type: ActivityType
+    type: number
     details?: string
     state?: string
     timestamps?: {
