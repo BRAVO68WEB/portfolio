@@ -37,11 +37,30 @@ export const WORK_EXPERIENCES: WorkExperience[] = [
       url: 'https://www.loginradius.com/',
     },
     description:
+      'As a Software Engineer in R&D as a part of Product Team, I am responsible for the development and maintenance of the LoginRadius APIs, SDKs, API References and PoCs. I have contributed in building Agentic IAM and MCP Auth, B2B IAM as features.',
+    position: 'Software Engineer L1',
+    timeline: {
+      from: 'March, 2026',
+      to: 'Present',
+    },
+    location: {
+      city: 'Hyderabad, India',
+      isRemote: false,
+    },
+    techstack: ['TypeScript', 'React', 'Node.js', 'Go', 'Docker', 'DataDog', 'Gitlab CI'],
+  },
+  {
+    company: {
+      logo: loginradiusLogo,
+      name: 'LoginRadius',
+      url: 'https://www.loginradius.com/',
+    },
+    description:
       'As a Software Engineer in Implementations as a part of Customer Success Team, I am responsible for the development and maintenance of the LoginRadius Docs, SDKs, API References and PoCs. I also help customers with their implementation of the LoginRadius platform and provide support to the customers.',
     position: 'Software Engineer / Implementations',
     timeline: {
       from: 'July, 2025',
-      to: 'Present',
+      to: 'February, 2026',
     },
     location: {
       city: 'Hyderabad, India',
