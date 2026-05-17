@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import type { RootParams } from '~/types/app'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { ThemeProvider } from 'next-themes'
@@ -136,6 +137,7 @@ export default async function RootLayout({ children, params }: { children: React
 
             <Toasts />
           </ThemeProvider>
+          <SpeedInsights />
         </body>
       </PostHogProvider>
     </html>
